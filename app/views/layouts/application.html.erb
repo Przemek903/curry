@@ -8,7 +8,60 @@
 </head>
 <body>
 
-<%= yield %>
+<div class="navbar navbar-static-top">
+	<div class="container">
+		<button type="button" class="navbar-toggle" data-toggle="collapse", data-target="nav-collapse">
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+		</button>
+		<a class="navbar-brand" href="#"> LOGO </a>
+		<ul class="nav navbar-nav">
+			<li><%= link_to "Recipes", recipes_path %></li>
+		</ul>
+
+		<ul class="nav navbar-nav pull-right">
+			<% if user_signed_in?  %>
+				<li><%= link_to "#{current_user.email}" %></li>
+				<li class="active"><%= link_to "Logout", destroy_user_session_path, :method => :delete %></li>
+			<% else %>
+				<li> <%= link_to "Login", new_user_session_path %></li>
+				<li class="active"> <%= link_to "SignUp", new_user_registration_path %></li>
+			<% end  %>
+		</ul>
+	</div>
+</div>
+	
+
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-2">
+				<div class="panel panel-primary" id="panels">
+					<div class="panel-heading">Food Preferences</div>
+					<% FoodPreference.all.each do  |fp| %>
+						<p><%= link_to "#{fp.name}", food_preference_path(fp.id) %></p>
+					<% end %>
+				</div>
+				<div class="panel panel-primary" id="panels">
+					<div class="panel-heading">Food Types</div>
+					<% FoodType.all.each do |ft|   %>
+						<p><%= link_to "#{ft.name}", food_type_path(ft.id) %></p>
+					<% end %>
+				</div>
+				<div class="panel panel-primary" id="panels">
+					<div class="panel-heading">Cuisines</div>
+					<% Cuisine.all.each do |c|  %>
+						<p><%= link_to "#{c.name}", cuisine_path(c.id) %></p>
+					<% end %>
+				</div>
+			</div> <!-- end col 2 -->
+			<div class="col-lg-9">
+				<%= yield %>				
+			</div> <!-- end col 9 -->
+		</div>
+	</div>
+
+
 
 </body>
 </html>

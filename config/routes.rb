@@ -1,4 +1,13 @@
 Rails.application.routes.draw do
+  devise_for :users
+  resources :recipes
+  root 'recipes#index'
+
+  get 'recipes/food_type/:id' => 'food_type#view', as: :food_type
+  get 'recipes/food_preference/:id' => 'food_preference#view', as: :food_preference
+  get 'recipes/cuisine/:id' => 'cuisine#view', as: :cuisine
+
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
